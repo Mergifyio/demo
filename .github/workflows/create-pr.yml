@@ -1,0 +1,38 @@
+name: Create Pull Requests
+on:
+  workflow_dispatch:
+    inputs:
+      autoqueue:
+        description: Whether to put the PR in queue automatically
+        type: boolean
+
+jobs:
+  create-hotfix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          mkdir testbed
+          echo `uuidgen` > testbed/`uuidgen`
+      - name: Create the hotfix pull request (autoqueue)
+        if: ${{ inputs.autoqueue }}
+        uses: peter-evans/create-pull-request@v5
+        with:
+          title: "Hotfix pull request"
+          body: >
+            This is a test pull request!
+          commit-message: >
+            Testing 123
+          labels: hotfix,autoqueue
+          base: main
+      - name: Create the hotfix pull request
+        if: ${{ ! inputs.autoqueue }}
+        uses: peter-evans/create-pull-request@v5
+        with:
+          title: "Hotfix pull request"
+          body: >
+            This is a test pull request!
+          commit-message: >
+            Testing 123
+          labels: hotfix
+          base: main

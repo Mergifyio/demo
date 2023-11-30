@@ -1,0 +1,44 @@
+pull_request_rules:
+  # If you add the label `automerge` on a PR, it will be merged automatically
+  - name: automatic merge
+    conditions:
+      - label = automerge
+    actions:
+      merge:
+        method: merge
+
+  # If you add the label `automerge` on a PR, it will be queued automatically
+  - name: automatic queue
+    conditions:
+      - label = autoqueue
+    actions:
+      queue:
+
+queue_rules:
+  - name: hotfix
+    speculative_checks: 5
+    allow_inplace_checks: false
+    queue_conditions:
+      - label = hotfix
+    # This can be queued without passing the CI
+    # But we still required to pass before merging
+    merge_conditions:
+      - check-success = test
+      - check-success = test-before-merge
+
+  - name: default
+    queue_conditions:
+      - label != lowprio
+      - label != hotfix
+      - check-success = test
+    merge_conditions:
+      - check-success = test-before-merge
+
+  - name: lowprio
+    batch_size: 3
+    batch_max_wait_time: 1 min
+    queue_conditions:
+      - label = lowprio
+      - check-success = test
+    merge_conditions:
+      - check-success = test-before-merge
