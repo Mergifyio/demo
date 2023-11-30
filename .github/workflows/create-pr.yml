@@ -1,0 +1,36 @@
+name: Create Pull Requests
+on:
+  workflow_dispatch:
+    inputs:
+      autoqueue:
+        description: Whether to put the PR in queue automatically
+        type: boolean
+
+jobs:
+  create-hotfix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          mkdir testbed
+          echo `uuidgen` > testbed/`uuidgen`
+      - name: Create the hotfix pull request (autoqueue)
+        if: ${{ inputs.autoqueue }}
+        uses: peter-evans/create-pull-request@v5
+        with:
+          title: "Hotfix pull request"
+          body: >
+            This is a test pull request.
+
+            It will be put in queue automatically by Mergify right now.
+          labels: hotfix,autoqueue
+      - name: Create the hotfix pull request
+        if: ${{ ! inputs.autoqueue }}
+        uses: peter-evans/create-pull-request@v5
+        with:
+          title: "Hotfix pull request"
+          body: >
+            This is a test pull request!
+
+            To put it in queue, run the `@mergifyio queue` command by posting a comment.
+          labels: hotfix
