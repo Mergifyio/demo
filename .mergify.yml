@@ -37,7 +37,7 @@ queue_rules:
   - name: hotfix
     speculative_checks: 5
     allow_inplace_checks: false
-    queue_conditions:
+    queue_conditions: []
     # This can be queued without passing the CI
     # But we still required to pass before merging
     merge_conditions:
