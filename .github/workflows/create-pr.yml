@@ -25,6 +25,7 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           title: ${{env.RANDOM_EMOJI}} pull request
+          branch-suffix: random
           body: >
             This is a test pull request.
 
@@ -40,6 +41,7 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           title: ${{env.RANDOM_EMOJI}} pull request
+          branch-suffix: random
           body: >
             This is a test pull request!
 
