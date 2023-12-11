@@ -26,7 +26,7 @@ jobs:
         with:
           title: ${{env.RANDOM_EMOJI}} pull request
           branch-suffix: random
-          body: >
+          body: |
             This is a test pull request.
 
             It will be put in queue automatically by Mergify right now.
@@ -42,7 +42,7 @@ jobs:
         with:
           title: ${{env.RANDOM_EMOJI}} pull request
           branch-suffix: random
-          body: >
+          body: |
             This is a test pull request!
 
             To put it in queue, run the `@mergifyio queue` command by posting a
