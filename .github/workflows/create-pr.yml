@@ -14,11 +14,17 @@ jobs:
       - run: |
           mkdir testbed
           echo `uuidgen` > testbed/`uuidgen`
+      - name: Generate Random Animal Emoji
+        id: random_animal_emoji
+        run: |
+          EMOJI_LIST=('🐶' '🐱' '🐭' '🐹' '🐰' '🦊' '🐻' '🐼' '🐨' '🐯' '🦁' '🐮' '🐷' '🐸' '🐵' '🦄' '🐞' '🦀' '🐧' '🐦')
+          RANDOM_EMOJI=${EMOJI_LIST[$RANDOM % ${#EMOJI_LIST[@]}]}
+          echo "RANDOM_EMOJI=$RANDOM_EMOJI" >> $GITHUB_ENV
       - name: Create a pull request (autoqueue)
         if: ${{ inputs.autoqueue }}
         uses: peter-evans/create-pull-request@v5
         with:
-          title: "A pull request automatically merged"
+          title: "$RANDOM_EMOJI pull request (autoqueue)"
           body: >
             This is a test pull request.
 
@@ -33,7 +39,7 @@ jobs:
         if: ${{ ! inputs.autoqueue }}
         uses: peter-evans/create-pull-request@v5
         with:
-          title: "A pull request"
+          title: "$RANDOM_EMOJI pull request"
           body: >
             This is a test pull request!
 
