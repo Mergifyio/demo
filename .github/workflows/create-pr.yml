@@ -14,23 +14,34 @@ jobs:
       - run: |
           mkdir testbed
           echo `uuidgen` > testbed/`uuidgen`
-      - name: Create the hotfix pull request (autoqueue)
+      - name: Create a pull request (autoqueue)
         if: ${{ inputs.autoqueue }}
         uses: peter-evans/create-pull-request@v5
         with:
-          title: "Hotfix pull request"
+          title: "A pull request automatically merged"
           body: >
             This is a test pull request.
 
             It will be put in queue automatically by Mergify right now.
-          labels: hotfix,autoqueue
+
+            You can chose the queue by adding a label:
+            - Use the `hotfix` label to put the PR in the hotfix queue;
+            - Use the `lowprio` label to put the PR in the lowprio queue;
+            - Do not set any label to have it enter the default queue.
+          labels: autoqueue
       - name: Create the hotfix pull request
         if: ${{ ! inputs.autoqueue }}
         uses: peter-evans/create-pull-request@v5
         with:
-          title: "Hotfix pull request"
+          title: "A pull request"
           body: >
             This is a test pull request!
 
-            To put it in queue, run the `@mergifyio queue` command by posting a comment.
-          labels: hotfix
+            To put it in queue, run the `@mergifyio queue` command by posting a
+            comment.
+
+            You can use label to route the PR to any queue:
+            - `@mergifyio queue hotfix` to enter the hotfix queue;
+            - `@mergifyio queue` to enter the default queue;
+            - `@mergifyio queue lowprio` to enter the lowprio queue;
+          labels:
