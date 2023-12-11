@@ -16,7 +16,7 @@ pull_request_rules:
       queue:
         name: hotfix
 
-  - name: automatic queue (hotfix)
+  - name: automatic queue (default)
     conditions:
       - label = autoqueue
       - label != hotfix
