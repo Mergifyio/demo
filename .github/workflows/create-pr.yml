@@ -24,7 +24,7 @@ jobs:
         if: ${{ inputs.autoqueue }}
         uses: peter-evans/create-pull-request@v5
         with:
-          title: "$RANDOM_EMOJI pull request (autoqueue)"
+          title: ${{env.RANDOM_EMOJI}} pull request
           body: >
             This is a test pull request.
 
@@ -39,7 +39,7 @@ jobs:
         if: ${{ ! inputs.autoqueue }}
         uses: peter-evans/create-pull-request@v5
         with:
-          title: "$RANDOM_EMOJI pull request"
+          title: ${{env.RANDOM_EMOJI}} pull request
           body: >
             This is a test pull request!
 
